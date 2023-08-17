@@ -62,7 +62,7 @@ while True:
 #             data[c] = ''
 #         c += 1
 
-if 'j ' in date or 'w ' in date:
+if 'j ' in date or 'r ' in date or 'w ' in date:
     c = 0
     while c < len(data):
         if not data[c]:
@@ -93,7 +93,7 @@ cities = []
 for city in c:
     if city.name != 'Chak':
         cities.append(city.name)
-cities.extend(['Attock', 'Umerkot', 'Sheikhupura', 'Dadyal', 'Muzaffarabad', 'Barnala', 'Burewala', 'Taxila'])
+cities.extend(['Attock', 'Umerkot', 'Sheikhupura', 'Dadyal', 'Muzaffarabad', 'Barnala'])
 replace_city = {'Kotli': 'Kotli-A.Kashmir', 'Mansehra': 'Manshera', 'Muzaffarabad': 'Muzaffarabad AK', 'Swat': 'Mingora (SWAT)',
                 'Mingora': 'Mingora (SWAT)', 'Abbottabad': 'Abbotabad', 'Sargodha': 'Sargodah', 'Mirpur': 'Mirpur A.K.',
                 'Rahim Yar Khan': 'RahimYarKhan', 'Toba Tek Singh': 'TobaTek-Singh', 'Gujar Khan': 'GujarKhan', 'Lakki': 'Laki Marwat',
@@ -257,18 +257,14 @@ while i < (len(data)):
         #     dest = city
 
         if 'j ' in date:
-            t = [name, adr, nmb, '', dest, 1, 0.5, cod, brands[k] + date.replace('j', ''), 'Yes', 'O',
-                 ins, '', 10 if cod < 10 else cod]
+            t = [brands[k] + date.replace('j', ''), cod, ins, name, nmb, adr, dest, 1, 1, '', '', 'Normal', 0.5]
         elif 'f ' in date:
-            t = [name, adr, nmb, '', dest, 1, 0.5, cod, brands[k] + date.replace('f', ''), 'Yes', 'O',
-                 ins, '', 10 if cod < 10 else cod]
+            t = [brands[k] + date.replace('f', ''), cod, ins, name, nmb, adr, dest, 1, 1, '', '', 'Normal', 0.5]
         else:
             if not flag:
-                t = [name, adr, nmb, '', dest, 1, 0.5, cod, brands[k] + " " + date, 'Yes', 'O', ins, '',
-                     10 if cod < 10 else cod]
+                t = [brands[k] + " " + date, cod, ins, name, nmb, adr, dest, 1, 1, '', '', 'Normal', 0.5]
             else:
-                t = [name, adr, nmb, '', dest, 1, 0.5, cod, "DE FORELS r " + dates[k], 'Yes', 'O', ins, '',
-                     10 if cod < 10 else cod]
+                t = ["DE FORELS r " + dates[k], cod, ins, name, nmb, adr, dest, 1, 1, '', '', 'Normal', 0.5]
 
         table1.append(t)
 
@@ -341,10 +337,10 @@ while i < (len(data)):
 
 
 df = pd.DataFrame(table1,
-                  columns=['Consignee Name', 'Consignee Address', 'Consignee Mobile Number', 'Consignee Email',
-                           'Destination City', 'Pieces', 'Weight', 'COD Amount', 'Order Reference Number',
-                           'Special Handling', 'Service Type', 'Product Details', 'Remarks',
-                           'Insurance/Declared Value'])
+                  columns=['Order Reference Number', 'Order Amount', 'Order Detail', 'Customer Name',
+                           'Customer Phone', 'Order Address', 'City', 'Items', 'Airway Bill Copies',
+                           'Notes', 'Address Code', 'Orde Type (Normal/Reversed/Replacement/Overland)',
+                           'Booking Weight'])
 if 'j ' in date:
     df.to_excel(rf'C:\Users\USER\Desktop\Branded Jewellery Excel Files\{today}.xlsx', index=False)
 elif 'f ' in date:

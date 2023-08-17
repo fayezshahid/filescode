@@ -62,12 +62,12 @@ while True:
 #             data[c] = ''
 #         c += 1
 
-if 'j ' in date:
+if 'j ' in date or 'r ' in date or 'w ' in date:
     c = 0
     while c < len(data):
         if not data[c]:
             data[c] = 'https'
-            while not data[c]:
+            while not data[c+1]:
                 c = c + 1
         c = c + 1
 
@@ -93,15 +93,18 @@ cities = []
 for city in c:
     if city.name != 'Chak':
         cities.append(city.name)
-cities.extend(['Attock', 'Umerkot', 'Sheikhupura', 'Wah Cantt', 'Kamoki', 'Muzaffarabad', 'Pirmahal', 'Balakot', 'Mirpurkhas'])
+cities.extend(['Attock', 'Umerkot', 'Sheikhupura', 'Wah Cantt', 'Kamoki', 'Muzaffarabad', 'Pirmahal', 'Balakot', 'Mirpurkhas',
+               'Daska', 'Jhang', 'Taxila'])
+
 replace_city = {'Kotli': 'Kotli (a. k)', 'Muzaffarabad': 'Muzaffarabad(ak)', 'Swat': 'Mingora (SWAT)', 'Timargara': 'Tamirgaraha',
                 'Mingora': 'Mingora (SWAT)', 'Mirpur': 'Mirpur (a. k)', 'Nawabshah': 'Nawab Shah', 'Kamoke': 'Kamoki', 'Karak': 'Kark',
-                'Toba Tek Singh': 'Toba Tek Sing','Lakki': 'Laki Marwat', 'Taunsa': 'Taunsa Sharif', 'Mirpurkhas': 'Mirpur Khas',
-                'Gwadar': 'Gawadar', 'Dera Murad Jamali': 'DeraMurad Jamal', 'Panjgur': 'Panjgoor', 'Sobhodero': 'Sobho dero',
-                'Tando Muhammad Khan': 'Tando Mohd.Khan', 'Sharqpur Sharif': 'Sharaqpur Shari', 'Thal': 'Thull',
-                'Battagram': 'Batgram', 'Thatta': 'Thatha', 'Nasirabad': 'Naseerabad', 'Kalabagh': 'Kala Bagh',
+                'Toba Tek Singh': 'Toba Tek Sing','Lakki': 'Lakki Marwat', 'Taunsa': 'Taunsa Sharif', 'Mirpurkhas': 'Mirpur Khas',
+                'Gwadar': 'Gawadar', 'Dera Murad Jamali': 'Dera Murad Jama', 'Panjgur': 'Panjgour', 'Sobhodero': 'Sobho dero',
+                'Tando Muhammad Khan': 'Tando Mohd.Khan', 'Sharqpur Sharif': 'Sharaqpur Shari', 'Thal': 'Thull', 'Nasirabad': 'Gilgit',
+                'Battagram': 'Batgram', 'Thatta': 'Thatha', 'Kalabagh': 'Kala Bagh', 'Matiari': 'Matiyari', 'Jauharabad': 'Jauhrabad',
                 'Mirwah Gorchani': 'Mirpur Khas', 'Bagh': 'Bagh (a.k.)', 'Renala Khurd': 'RenalaKhurd', 'Kashmor': 'Kashmoor',
-                'Tando Allahyar': 'Tando ala yar'}
+                'Tando Allahyar': 'Tando ala yar', 'Jalalpur Jattan': 'Jalal Pur Jattan', 'Chichawatni': 'Chicha watni',
+                'Umerkot': 'Umer kot', 'Shakargarh': 'Shakar garh', 'Shahdadpur': 'Shadadpur'}
 
 while i < (len(data)):
 
@@ -242,7 +245,8 @@ while i < (len(data)):
         try:
             cod = int(cod)
         except:
-            print(data[i - 2])
+            # print(data[i - 5])
+            print(name)
             quit()
 
         for city in cities:
@@ -253,6 +257,8 @@ while i < (len(data)):
 
         if 'send details to confirm your order:' in adr.lower() or 'for order confirmation send the details mentioned below:' in adr.lower():
             adr = adr.replace('Send details to confirm your order:', '')
+            adr = adr.replace('For Order Confirmation send the details Mentioned below: ', '')
+            adr = adr.replace('Alternate phone number (if any)', 'Alternate: ')
 
         # if not dest:
         #     nlp = spacy.load('CityClassification/model/model-best')
