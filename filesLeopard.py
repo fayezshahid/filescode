@@ -2,7 +2,8 @@ import pandas as pd
 from datetime import datetime
 import re
 from allcities import cities
-import spacy
+
+parent_dir = r'C:\Users\USER\OneDrive - FAST National University\Desktop'
 
 date = input("Enter date: ")
 flag = 0
@@ -94,7 +95,7 @@ for city in c:
     if city.name != 'Chak':
         cities.append(city.name)
 cities.extend(['Attock', 'Umerkot', 'Sheikhupura', 'Wah Cantt', 'Kamoki', 'Muzaffarabad', 'Pirmahal', 'Balakot', 'Mirpurkhas',
-               'Daska', 'Jhang', 'Taxila'])
+               'Daska', 'Jhang', 'Taxila', 'Burewala'])
 
 replace_city = {'Kotli': 'Kotli (a. k)', 'Muzaffarabad': 'Muzaffarabad(ak)', 'Swat': 'Mingora (SWAT)', 'Timargara': 'Tamirgaraha',
                 'Mingora': 'Mingora (SWAT)', 'Mirpur': 'Mirpur (a. k)', 'Nawabshah': 'Nawab Shah', 'Kamoke': 'Kamoki', 'Karak': 'Kark',
@@ -104,7 +105,7 @@ replace_city = {'Kotli': 'Kotli (a. k)', 'Muzaffarabad': 'Muzaffarabad(ak)', 'Sw
                 'Battagram': 'Batgram', 'Thatta': 'Thatha', 'Kalabagh': 'Kala Bagh', 'Matiari': 'Matiyari', 'Jauharabad': 'Jauhrabad',
                 'Mirwah Gorchani': 'Mirpur Khas', 'Bagh': 'Bagh (a.k.)', 'Renala Khurd': 'RenalaKhurd', 'Kashmor': 'Kashmoor',
                 'Tando Allahyar': 'Tando ala yar', 'Jalalpur Jattan': 'Jalal Pur Jattan', 'Chichawatni': 'Chicha watni',
-                'Umerkot': 'Umer kot', 'Shakargarh': 'Shakar garh', 'Shahdadpur': 'Shadadpur'}
+                'Umerkot': 'Umer kot', 'Shakargarh': 'Shakar garh', 'Shahdadpur': 'Shadadpur', 'Yazman': 'Yazman Mandi'}
 
 while i < (len(data)):
 
@@ -356,10 +357,10 @@ df = pd.DataFrame(table1,
                            'Destination CityName', 'bookedPacketCollectAmount', 'bookedpacketorderid', 'ProductDescription',
                            'bookedPacketWeight', 'shipment_type', 'numberOfPieces', 'return_city', 'return_address'])
 if 'j ' in date:
-    df.to_excel(rf'C:\Users\USER\Desktop\Branded Jewellery Excel Files\{today}.xlsx', index=False)
+    df.to_excel(rf'{parent_dir}\Branded Jewellery Excel Files\{today}.xlsx', index=False)
 elif 'f ' in date:
-    df.to_excel(rf'C:\Users\USER\Desktop\Floir Excel Files\{today}.xlsx', index=False)
+    df.to_excel(rf'{parent_dir}\Floir Excel Files\{today}.xlsx', index=False)
 elif 'w ' in date:
-    df.to_excel(rf'C:\Users\USER\Desktop\Whatsapp Excel Files\{today}.xlsx', index=False)
+    df.to_excel(rf'{parent_dir}\Whatsapp Excel Files\{today}.xlsx', index=False)
 else:
-    df.to_excel(rf'C:\\Users\USER\Desktop\Excel Files\{today}.xlsx', index=False)
+    df.to_excel(rf'{parent_dir}\Excel Files\{today}.xlsx', index=False)

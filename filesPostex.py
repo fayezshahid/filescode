@@ -2,7 +2,8 @@ import pandas as pd
 from datetime import datetime
 import re
 from allcities import cities
-import spacy
+
+parent_dir = r'C:\Users\USER\OneDrive - FAST National University\Desktop'
 
 date = input("Enter date: ")
 flag = 0
@@ -15,7 +16,7 @@ if 'r ' in date:
     else:
         dates.append(date.replace('r ', ''))
 
-b = ["DE FORELS", "NAME LIST", "JEWELLERY HUB", "DA ELODEAA"]
+b = ["DE FORELS", "NAME LIST", "JEWELLERY HUB", "DA ELODEAA", "AVERY DAVIS"]
 
 if 'w ' in date or 'p ' in date or 'r ' in date:
     brands = ["DE FORELS"]
@@ -42,7 +43,7 @@ print("\nEnter orders below: ")
 
 data = []
 
-if 'w ' in date or 'r ' in date or 'j ' in date:
+if 'w ' in date or 'p ' in date or 'j ' in date:
     data.append('https')
 
 while True:
@@ -62,10 +63,10 @@ while True:
 #             data[c] = ''
 #         c += 1
 
-if 'j ' in date or 'r ' in date or 'w ' in date:
+if 'j ' in date or 'p ' in date or 'w ' in date:
     c = 0
     while c < len(data):
-        if not data[c]:
+        if not data[c] and not data[c+1]:
             data[c] = 'https'
             while not data[c+1]:
                 c = c + 1
@@ -93,14 +94,21 @@ cities = []
 for city in c:
     if city.name != 'Chak':
         cities.append(city.name)
-cities.extend(['Attock', 'Umerkot', 'Sheikhupura', 'Dadyal', 'Muzaffarabad', 'Barnala'])
-replace_city = {'Kotli': 'Kotli-A.Kashmir', 'Mansehra': 'Manshera', 'Muzaffarabad': 'Muzaffarabad AK', 'Swat': 'Mingora (SWAT)',
-                'Mingora': 'Mingora (SWAT)', 'Abbottabad': 'Abbotabad', 'Sargodha': 'Sargodah', 'Mirpur': 'Mirpur A.K.',
-                'Rahim Yar Khan': 'RahimYarKhan', 'Toba Tek Singh': 'TobaTek-Singh', 'Gujar Khan': 'GujarKhan', 'Lakki': 'Laki Marwat',
-                'Gwadar': 'Gawadar', 'Dera Murad Jamali': 'DeraMurad Jamal', 'Panjgur': 'Panjgoor', 'Kalabagh': 'Kala Bagh',
-                'Tando Muhammad Khan': 'Tando Mohd Khan', 'Kandhkot': 'Kandh Kot', 'Sharqpur Sharif': 'Sharaqpur', 'Thal': 'Thull',
-                'Muridke': 'Muridkey', 'Pattoki': 'Patoki', 'Battagram': 'Battgram', 'Skardu': 'Gilgit', 'Dadyal': 'Dadyal (a.k)',
-                'Nushki': 'Noshki'}
+cities.extend(['Attock', 'Umerkot', 'Sheikhupura', 'Dadyal', 'Muzaffarabad', 'Barnala', 'Hub Chowki', 'Mirpur', 'Mardan', 'Buner',
+               'Phool Nagar', 'Burewala', 'Matta', 'Batkhela', 'Sujawal', 'Jhang', 'Timergara', 'Mirpur Mathelo', 'Kotla Arab Ali Khan',
+               'Taxila'])
+
+replace_city = {'Kotli': 'Kotli (AJK)', 'Muzaffarabad': 'Muzaffarabad (AJK)', 'Swat': 'Mingora', 'Mithi': 'Mitthi', 'Bagh': 'Bagh (AJK)',
+                'Mirpur': 'Mirpur (AJK)', 'Hasilpur': 'Hasil Pur', 'Pindi Bhattian': 'Pindi Bhatian', 'Shekhupura': 'Sheikhupura',
+                'Lakki': 'Lakki Marwat', 'Taunsa': 'Taunsa Sharif', 'Bhalwal': 'Bhalwaal', 'Jauharabad': 'Khushab', 'Kashmor': 'Kashmore',
+                'Kalabagh': 'Kala Bagh', 'Jhang City': 'Jhang', 'Mirpur Mathelo': 'Mir pur Methelo', 'Ubauro': 'Ubaro',
+                'Tando Muhammad Khan': 'Tando Mohd Khan', 'Kandhkot': 'Kand Kot', 'Sharqpur Sharif': 'Sharaqpur', 'Thal': 'Thull',
+                'Pattoki': 'Patoki', 'Skardu': 'Gilgit', 'Dadyal': 'Dadyal (AJK)', 'Ranipur': 'Rani Pur', 'Chishtian': 'Chistian',
+                'Naudero': 'Nudearo', 'Laki Marwat': 'Lakki Marwat', 'Shahpur': 'Shah Pur Chakar', 'Shahdad Kot': 'Shadad Kot',
+                'Talagang': 'Talagung', 'Taxila': 'Taxla', 'Parachinar': 'Kurram', 'Dipalpur': 'Depalpur', 'Sobhodero': 'Khairpur',
+                'Kahuta': 'Kahauta', 'Upper Dir': 'Lower Dir', 'Sujawal': 'Sajawal', 'Kurram': 'Kohat', 'Dunyapur': 'Duniapur',
+                'Sarai Alamgir': 'Sari Alamgir', 'Thul': 'Thull', 'Timergara': 'Timargarah', 'Pir Mahal': 'Toba Tek Singh',
+                'Umarkot': 'Umerkot'}
 
 while i < (len(data)):
 
@@ -241,7 +249,7 @@ while i < (len(data)):
         try:
             cod = int(cod)
         except:
-            print(data[i - 2])
+            print(adr)
             quit()
 
         for city in cities:
@@ -342,10 +350,10 @@ df = pd.DataFrame(table1,
                            'Notes', 'Address Code', 'Orde Type (Normal/Reversed/Replacement/Overland)',
                            'Booking Weight'])
 if 'j ' in date:
-    df.to_excel(rf'C:\Users\USER\Desktop\Branded Jewellery Excel Files\{today}.xlsx', index=False)
+    df.to_excel(rf'{parent_dir}\Branded Jewellery Excel Files\{today}.xlsx', index=False)
 elif 'f ' in date:
-    df.to_excel(rf'C:\Users\USER\Desktop\Floir Excel Files\{today}.xlsx', index=False)
+    df.to_excel(rf'{parent_dir}\Floir Excel Files\{today}.xlsx', index=False)
 elif 'w ' in date:
-    df.to_excel(rf'C:\Users\USER\Desktop\Whatsapp Excel Files\{today}.xlsx', index=False)
+    df.to_excel(rf'{parent_dir}\Whatsapp Excel Files\{today}.xlsx', index=False)
 else:
-    df.to_excel(rf'C:\\Users\USER\Desktop\Excel Files\{today}.xlsx', index=False)
+    df.to_excel(rf'{parent_dir}\Excel Files\{today}.xlsx', index=False)
